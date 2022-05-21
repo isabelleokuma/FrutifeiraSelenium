@@ -3,9 +3,11 @@
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
- using System;
-using System.Collections.ObjectModel;
+using OpenQA.Selenium.Support.UI;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace SeleniumCsharp
 
@@ -19,64 +21,44 @@ namespace SeleniumCsharp
         {
             string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
             driver = new ChromeDriver(path + @"\drivers\");
-            driver.Navigate().GoToUrl("https://frutifeira-pipeline-front-end.s3-website-us-east-1.amazonaws.com/");
+            driver.Navigate().GoToUrl("http://localhost:8081/");
         }
 
         [Test]
-        public void verifyCondominiumModal()
+        public async void selectCondominiumModal()
         {
+            //Arrange
             driver.FindElement(By.Id("inputModalCondominios")).SendKeys("Condo");
-            driver.FindElement(By.Id("modalCondominios")).Submit();
+            var parentDiv = driver.FindElement(By.Id("listCondominios"));
+            var lis = parentDiv.FindElements(By.TagName("li"));
+            var li = lis[0];
+
+            //Act
+            lis[0].Click();
+            await Task.Delay(2000);
+
+            //Assert
+            driver.FindElement(By.Id("clickQualCondominio")).Click();
+            var label = driver.FindElement(By.Id("textCondominuoSelected"));
+            Assert.True(!string.IsNullOrEmpty(label.Text));
+            GoHome();
+
         }
 
         [Test]
-        public void verifyCategories()
-        {           
-            driver.FindElement(By.Id("clickCategorias"));
-            driver.FindElement(By.Id("clickCategorias1"));
-            driver.FindElement(By.Id("clickCategorias2"));
-            driver.FindElement(By.Id("clickCategorias3"));
-            driver.FindElement(By.Id("clickCategorias4"));
-            driver.FindElement(By.Id("clickCategorias5"));
-            driver.FindElement(By.Id("clickCategorias"));
-        }
-
-        [Test]
-        public void verifySearchBar()
+        public async void searchProducts()
         {
+            //
             driver.FindElement(By.Id("inputSearchBar")).SendKeys("morango");
-            driver.FindElement(By.Id("modalCondominios")).Submit();
+            await Task.Delay(2000);
         }
 
         [Test]
-        public void verifyModalChangeCondominium()
+        public void addProductToCart()
         {
             driver.FindElement(By.Id("clickQualCondominio"));
-            driver.FindElement(By.Id("clickFechaCondominio"));
-            verifyCondominiumModal();
-        }
-
-        [Test]
-        public void verifyLateralCart()
-        {
-            driver.FindElement(By.Id("clickCart"));
-            //colocar id no resto desse modal, incluse botão
-        }
-
-        [Test]
-        public void verifyProfileMenu()
-        {
-            driver.FindElement(By.Id("clickLogin"));
-        }
-
-        [Test]
-        public void verifyProductCard()
-        {
-            driver.FindElement(By.Id("clickProduto"));
-            driver.FindElement(By.Id("clickAumentarProduto"));
-            driver.FindElement(By.Id("clickDiminuirProduto"));
-            driver.FindElement(By.Id("btnAdicionarProduto"));
-            driver.FindElement(By.Id("clickFecharProduto"));
+            //driver.FindElement(By.Id("clickFechaCondominio"));
+            //verifyCondominiumModal();
         }
 
         [OneTimeTearDown]
@@ -84,6 +66,9 @@ namespace SeleniumCsharp
         {
             driver.Quit();
         }
+
+        public void GoHome() => driver.Navigate().GoToUrl("http://localhost:8081/");
+
 
     }
 
