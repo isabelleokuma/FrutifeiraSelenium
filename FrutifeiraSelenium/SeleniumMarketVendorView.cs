@@ -18,7 +18,7 @@ namespace SeleniumCsharp
         {
             string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
             driver = new ChromeDriver(path + @"\drivers\");
-            driver.Navigate().GoToUrl("http://localhost:8081/LoginAdm");
+            driver.Navigate().GoToUrl("http://localhost:8080/LoginAdm");
         }
 
         [Test]
@@ -35,8 +35,8 @@ namespace SeleniumCsharp
             await Task.Delay(2000);
 
             //Assert
-            Assert.False(driver.Url.Equals("http://localhost:8081/LoginAdm"));
-            Assert.True(driver.Url.Equals("http://localhost:8081/Products"));
+            Assert.False(driver.Url.Equals("http://localhost:8080/LoginAdm"));
+            Assert.True(driver.Url.Equals("http://localhost:8080/Products"));
         }
 
         [Test]
@@ -54,20 +54,20 @@ namespace SeleniumCsharp
 
             //Arrange
             driver.FindElement(By.Id("nomeProduto")).SendKeys("melancia");
-            var parentDiv = driver.FindElement(By.Id("listaTipoProduto"));
-            var lis = parentDiv.FindElements(By.TagName("div"));
-            var span = lis[1];
+            //var parentDiv = driver.FindElement(By.Id("listaTipoProduto"));
+            //var lis = parentDiv.FindElements(By.TagName("div"));
+            //var span = lis[0];
 
-            //Act
-            await Task.Delay(2000);
-            span.Click();
-            await Task.Delay(2000);
+            ////Act
+            //await Task.Delay(2000);
+            //span.Click();
+            //await Task.Delay(2000);
 
             //Arrange
             driver.FindElement(By.Id("descricaoProduto")).SendKeys("melancia meu amor todinho");
             driver.FindElement(By.Id("precoProduto")).SendKeys("14");
             driver.FindElement(By.Id("qtdProduto")).SendKeys("2500");
-            driver.FindElement(By.Id("radioUnidadeProduto")).Click();
+            driver.FindElement(By.Id("radioGramasProduto")).Click();
             driver.FindElement(By.Id("descontoProduto")).SendKeys("5");
             var btnSalvarProduto = driver.FindElement(By.Id("btnSalvarProduto"));
 
@@ -78,7 +78,8 @@ namespace SeleniumCsharp
 
             //Assert
             var aux = driver.FindElement(By.Id("marketVendor_cart"));
-            //Assert.True(driver.FindElement(By.Id("marketVendor_cart")).GetCssValue("")
+            string s = aux.GetAttribute("class");
+            Assert.True(s.Equals("active"));
         }
     }
 }

@@ -22,7 +22,7 @@ namespace SeleniumCsharp
         {
             string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
             driver = new ChromeDriver(path + @"\drivers\");
-            driver.Navigate().GoToUrl("http://localhost:8081/");
+            driver.Navigate().GoToUrl("http://localhost:8080/");
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace SeleniumCsharp
             driver.Quit();
         }
 
-        public void GoHome() => driver.Navigate().GoToUrl("http://localhost:8081/");
+        public void GoHome() => driver.Navigate().GoToUrl("http://localhost:8080/");
 
 
     }

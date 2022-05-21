@@ -18,7 +18,7 @@ namespace SeleniumCsharp
         {
             string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
             driver = new ChromeDriver(path + @"\drivers\");
-            driver.Navigate().GoToUrl("http://localhost:8081/LoginAdm");
+            driver.Navigate().GoToUrl("http://localhost:8080/LoginAdm");
         }
 
         [Test]
@@ -41,8 +41,8 @@ namespace SeleniumCsharp
             await Task.Delay(2000);
 
             //Assert
-            Assert.False(driver.Url.Equals("http://localhost:8081/LoginAdm"));
-            Assert.True(driver.Url.Equals("http://localhost:8081/Condominium"));
+            Assert.False(driver.Url.Equals("http://localhost:8080/LoginAdm"));
+            Assert.True(driver.Url.Equals("http://localhost:8080/Condominium"));
         }
     }
 }
