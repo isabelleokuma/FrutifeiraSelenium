@@ -9,10 +9,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
+
 namespace SeleniumCsharp
 
 {
-    public class Tests
+    public class UserTests
     {
         IWebDriver driver;
 
@@ -25,7 +26,7 @@ namespace SeleniumCsharp
         }
 
         [Test]
-        public async void selectCondominiumModal()
+        public async Task selectCondominiumModal()
         {
             //Arrange
             driver.FindElement(By.Id("inputModalCondominios")).SendKeys("Condo");
@@ -46,7 +47,7 @@ namespace SeleniumCsharp
         }
 
         [Test]
-        public async void searchProducts()
+        public async Task searchProducts()
         {
             //
             driver.FindElement(By.Id("inputSearchBar")).SendKeys("morango");
