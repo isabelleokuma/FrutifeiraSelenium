@@ -53,23 +53,12 @@ namespace SeleniumCsharp
             await Task.Delay(2000);
 
             //Arrange
-            driver.FindElement(By.Id("nomeProduto")).SendKeys("melancia");
-            var parentDiv = driver.FindElement(By.Id("listaTipoProduto"));
-            parentDiv.Click();
-            await Task.Delay(1500);
-            var lis = parentDiv.FindElements(By.TagName("div"));
-            var span = lis[0];
-
-            //Act
-            await Task.Delay(2000);
-            span.Click();
-            await Task.Delay(2000);
-
-            //Arrange
-            driver.FindElement(By.Id("descricaoProduto")).SendKeys("melancia meu amor todinho");
+            driver.FindElement(By.Id("nomeProduto")).SendKeys("rabanete");
+            driver.FindElement(By.Id("descricaoProduto")).SendKeys("rabanete é ardido");
             driver.FindElement(By.Id("precoProduto")).SendKeys("14");
             driver.FindElement(By.Id("qtdProduto")).SendKeys("2500");
             driver.FindElement(By.Id("radioGramasProduto")).Click();
+            driver.FindElement(By.Id("selectImg")).SendKeys("https://www.proativaalimentos.com.br/image/cache/catalog/img_prod/folha-de-rabanete[1]-1000x1000.jpg");
             driver.FindElement(By.Id("descontoProduto")).SendKeys("5");
             var btnSalvarProduto = driver.FindElement(By.Id("btnSalvarProduto"));
 

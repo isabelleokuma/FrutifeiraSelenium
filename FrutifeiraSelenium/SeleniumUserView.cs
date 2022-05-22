@@ -70,6 +70,39 @@ namespace SeleniumCsharp
         }
 
         [Test]
+        public async Task signUp()
+        {
+            selectCondominiumModal();
+            await Task.Delay(6000);
+
+            //Arrange & Act
+            driver.FindElement(By.Id("clickLogin")).Click();
+            await Task.Delay(1000);
+            driver.FindElement(By.Id("clickLabelSignUp")).Click();
+            await Task.Delay(1000);
+            driver.FindElement(By.Id("inputNomeCadastro")).SendKeys("Jungkook");
+            driver.FindElement(By.Id("inputSobrenomeCadastro")).SendKeys("Jeon");
+            driver.FindElement(By.Id("inputEmailCadastro")).SendKeys("jungkook@outlook.com");
+            driver.FindElement(By.Id("inputFoneCadastro")).SendKeys("11988283837");
+            driver.FindElement(By.Id("inputCPFCadastro")).SendKeys("29322077812");
+            driver.FindElement(By.Id("inputSenhaCadastro")).SendKeys("bts123");
+            driver.FindElement(By.Id("inputConfirmSenhaCadastro")).SendKeys("bts123");
+            await Task.Delay(1000);
+            driver.FindElement(By.Id("saveUserButton")).Click();
+            await Task.Delay(3000);
+            driver.FindElement(By.Id("modalLoginEmail")).SendKeys("jungkook@outlook.com");
+            driver.FindElement(By.Id("modalLoginSenha")).SendKeys("bts123");
+            await Task.Delay(1000);
+            driver.FindElement(By.Id("btnModalEntrar")).Click();
+            await Task.Delay(2000);
+            driver.FindElement(By.Id("clickLogin")).Click();
+            await Task.Delay(3000);
+
+            //Assert
+            Assert.True(driver.FindElement(By.Id("labelSair")).Text.ToUpper().Equals("SAIR"));
+        }
+
+        [Test]
         public async Task searchProducts()
         {
             selectCondominiumModal();
