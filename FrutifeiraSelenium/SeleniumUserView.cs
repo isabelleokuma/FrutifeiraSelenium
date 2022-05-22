@@ -47,6 +47,29 @@ namespace SeleniumCsharp
         }
 
         [Test]
+        public async Task Login()
+        {
+            selectCondominiumModal();
+            await Task.Delay(6000);
+
+            //Arrange & Act
+            driver.FindElement(By.Id("clickLogin")).Click();
+            await Task.Delay(1000);
+            driver.FindElement(By.Id("clickLabelLogin")).Click();
+            await Task.Delay(1000);
+            driver.FindElement(By.Id("modalLoginEmail")).SendKeys("raphaelkonichi@gmail.com");
+            driver.FindElement(By.Id("modalLoginSenha")).SendKeys("fruti123");
+            await Task.Delay(1000);
+            driver.FindElement(By.Id("btnModalEntrar")).Click();
+            await Task.Delay(2000);
+            driver.FindElement(By.Id("clickLogin")).Click();
+            await Task.Delay(3000);
+
+            //Assert
+            Assert.True(driver.FindElement(By.Id("labelSair")).Text.ToUpper().Equals("SAIR"));
+        }
+
+        [Test]
         public async Task searchProducts()
         {
             selectCondominiumModal();
@@ -68,11 +91,28 @@ namespace SeleniumCsharp
         }
 
         [Test]
-        public void addProductToCart()
+        public async Task addProductToCart()
         {
-            driver.FindElement(By.Id("clickQualCondominio"));
-            //driver.FindElement(By.Id("clickFechaCondominio"));
-            //verifyCondominiumModal();
+            selectCondominiumModal();
+            await Task.Delay(6000);
+
+            //Arrange
+            var cardPromo = driver.FindElement(By.Id("cardPromo_627fd1107043f7a5efa51789"));
+
+            //Act
+            cardPromo.Click();
+            await Task.Delay(1500);
+            driver.FindElement(By.Id("clickAumentarProduto")).Click();
+            await Task.Delay(1500);
+            driver.FindElement(By.Id("clickReduzirProduto")).Click();
+            await Task.Delay(2000);
+            driver.FindElement(By.Id("btnAdicionarProduto")).Click();
+            await Task.Delay(2000);
+            driver.FindElement(By.Id("clickFecharProduto")).Click();
+            await Task.Delay(2000);
+
+            //Assert
+            Assert.False(driver.FindElement(By.Id("totalCarrinho")).Equals("R$ 0,00"));
         }
 
         [Test]
