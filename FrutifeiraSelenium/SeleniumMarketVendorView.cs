@@ -54,14 +54,16 @@ namespace SeleniumCsharp
 
             //Arrange
             driver.FindElement(By.Id("nomeProduto")).SendKeys("melancia");
-            //var parentDiv = driver.FindElement(By.Id("listaTipoProduto"));
-            //var lis = parentDiv.FindElements(By.TagName("div"));
-            //var span = lis[0];
+            var parentDiv = driver.FindElement(By.Id("listaTipoProduto"));
+            parentDiv.Click();
+            await Task.Delay(1500);
+            var lis = parentDiv.FindElements(By.TagName("div"));
+            var span = lis[0];
 
-            ////Act
-            //await Task.Delay(2000);
-            //span.Click();
-            //await Task.Delay(2000);
+            //Act
+            await Task.Delay(2000);
+            span.Click();
+            await Task.Delay(2000);
 
             //Arrange
             driver.FindElement(By.Id("descricaoProduto")).SendKeys("melancia meu amor todinho");
