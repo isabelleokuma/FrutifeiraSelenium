@@ -25,7 +25,7 @@ namespace SeleniumCsharp
             driver.Navigate().GoToUrl("http://localhost:8080/");
         }
 
-        [Test]
+        [Test, Order(1)]
         public async Task selectCondominiumModal()
         {
             //Arrange
@@ -46,7 +46,7 @@ namespace SeleniumCsharp
 
         }
 
-        [Test]
+        [Test, Order(3)]
         public async Task Login()
         {
             selectCondominiumModal();
@@ -63,15 +63,20 @@ namespace SeleniumCsharp
             driver.FindElement(By.Id("btnModalEntrar")).Click();
             await Task.Delay(2000);
             driver.FindElement(By.Id("clickLogin")).Click();
-            await Task.Delay(3000);
+            await Task.Delay(2000);
 
             //Assert
             Assert.True(driver.FindElement(By.Id("labelSair")).Text.ToUpper().Equals("SAIR"));
+
         }
 
-        [Test]
+        [Test, Order(2)]
         public async Task signUp()
         {
+            Random rnd = new Random(); 
+            int num = rnd.Next();
+            string numString = num.ToString();
+
             selectCondominiumModal();
             await Task.Delay(6000);
 
@@ -82,15 +87,15 @@ namespace SeleniumCsharp
             await Task.Delay(1000);
             driver.FindElement(By.Id("inputNomeCadastro")).SendKeys("Jungkook");
             driver.FindElement(By.Id("inputSobrenomeCadastro")).SendKeys("Jeon");
-            driver.FindElement(By.Id("inputEmailCadastro")).SendKeys("jungkook@outlook.com");
+            driver.FindElement(By.Id("inputEmailCadastro")).SendKeys("jungkook" + numString + "@ig.com.br");
             driver.FindElement(By.Id("inputFoneCadastro")).SendKeys("11988283837");
-            driver.FindElement(By.Id("inputCPFCadastro")).SendKeys("29322077812");
+            driver.FindElement(By.Id("inputCPFCadastro")).SendKeys("25844966711");
             driver.FindElement(By.Id("inputSenhaCadastro")).SendKeys("bts123");
             driver.FindElement(By.Id("inputConfirmSenhaCadastro")).SendKeys("bts123");
             await Task.Delay(1000);
             driver.FindElement(By.Id("saveUserButton")).Click();
             await Task.Delay(3000);
-            driver.FindElement(By.Id("modalLoginEmail")).SendKeys("jungkook@outlook.com");
+            driver.FindElement(By.Id("modalLoginEmail")).SendKeys("jungkook" + numString + "@ig.com.br");
             driver.FindElement(By.Id("modalLoginSenha")).SendKeys("bts123");
             await Task.Delay(1000);
             driver.FindElement(By.Id("btnModalEntrar")).Click();
@@ -100,9 +105,13 @@ namespace SeleniumCsharp
 
             //Assert
             Assert.True(driver.FindElement(By.Id("labelSair")).Text.ToUpper().Equals("SAIR"));
+
+            //Act
+            driver.FindElement(By.Id("labelSair")).Click();
+            await Task.Delay(2000);
         }
 
-        [Test]
+        [Test, Order(7)]
         public async Task searchProducts()
         {
             selectCondominiumModal();
@@ -123,9 +132,12 @@ namespace SeleniumCsharp
             Assert.True(driver.Url.Equals("http://localhost:8080/ListAllProducts/62830c2ad8e1850ac3348138?search=Morango"));
         }
 
-        [Test]
+        [Test, Order(5)]
         public async Task addProductToCart()
         {
+            driver.Navigate().GoToUrl("http://localhost:8080/");
+            await Task.Delay(2000);
+
             selectCondominiumModal();
             await Task.Delay(6000);
 
@@ -148,11 +160,14 @@ namespace SeleniumCsharp
             Assert.False(driver.FindElement(By.Id("totalCarrinho")).Equals("R$ 0,00"));
         }
 
-        [Test]
+        [Test, Order(6)]
         public async Task goToMarketVendorStand()
         {
-            selectCondominiumModal();
+            driver.Navigate().GoToUrl("http://localhost:8080/");
             await Task.Delay(2000);
+
+            selectCondominiumModal();
+            await Task.Delay(6000);
 
             //Arrange
             var stand = driver.FindElement(By.Id("stand1"));
@@ -166,11 +181,11 @@ namespace SeleniumCsharp
             Assert.True(driver.Url.Equals("http://localhost:8080/ListProduct/627af846b45b280fe8438f51"));
         }
 
-        [Test]
+        [Test, Order(4)]
         public async Task selectAllTypesCategory()
         {
             selectCondominiumModal();
-            await Task.Delay(3000);
+            await Task.Delay(6000);
 
             //Arrange
             var categories = driver.FindElement(By.Id("clickCategorias"));

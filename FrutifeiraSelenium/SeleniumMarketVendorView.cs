@@ -21,7 +21,7 @@ namespace SeleniumCsharp
             driver.Navigate().GoToUrl("http://localhost:8080/LoginAdm");
         }
 
-        [Test]
+        [Test, Order(1)]
         public async Task MarketVendorLogin()
         {
             //Arrange
@@ -39,12 +39,12 @@ namespace SeleniumCsharp
             Assert.True(driver.Url.Equals("http://localhost:8080/Products"));
         }
 
-        [Test]
+        [Test, Order(2)]
         public async Task MarketVendorAddProduct()
         {
             MarketVendorLogin();
+            await Task.Delay(5000);
 
-            await Task.Delay(2000);
             //Arrange
             var abaCadastroProduto = driver.FindElement(By.Id("marketVendor_cart-add"));
 
