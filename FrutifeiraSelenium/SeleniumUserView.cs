@@ -22,7 +22,7 @@ namespace SeleniumCsharp
         {
             string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
             driver = new ChromeDriver(path + @"\drivers\");
-            driver.Navigate().GoToUrl("http://localhost:8080/");
+            driver.Navigate().GoToUrl("http://frutifeira-pipeline-front-end.s3-website-us-east-1.amazonaws.com/");
         }
 
         [Test, Order(1)]
@@ -50,20 +50,20 @@ namespace SeleniumCsharp
         public async Task Login()
         {
             selectCondominiumModal();
-            await Task.Delay(6000);
+            await Task.Delay(10000);
 
             //Arrange & Act
             driver.FindElement(By.Id("clickLogin")).Click();
-            await Task.Delay(1000);
+            await Task.Delay(10000);
             driver.FindElement(By.Id("clickLabelLogin")).Click();
-            await Task.Delay(1000);
+            await Task.Delay(2000);
             driver.FindElement(By.Id("modalLoginEmail")).SendKeys("raphaelkonichi@gmail.com");
             driver.FindElement(By.Id("modalLoginSenha")).SendKeys("fruti123");
             await Task.Delay(1000);
             driver.FindElement(By.Id("btnModalEntrar")).Click();
             await Task.Delay(2000);
             driver.FindElement(By.Id("clickLogin")).Click();
-            await Task.Delay(2000);
+            await Task.Delay(10000);
 
             //Assert
             Assert.True(driver.FindElement(By.Id("labelSair")).Text.ToUpper().Equals("SAIR"));
@@ -73,16 +73,16 @@ namespace SeleniumCsharp
         [Test, Order(2)]
         public async Task signUp()
         {
-            Random rnd = new Random(); 
+            Random rnd = new Random();
             int num = rnd.Next();
             string numString = num.ToString();
 
             selectCondominiumModal();
-            await Task.Delay(6000);
+            await Task.Delay(10000);
 
             //Arrange & Act
             driver.FindElement(By.Id("clickLogin")).Click();
-            await Task.Delay(1000);
+            await Task.Delay(10000);
             driver.FindElement(By.Id("clickLabelSignUp")).Click();
             await Task.Delay(1000);
             driver.FindElement(By.Id("inputNomeCadastro")).SendKeys("Jungkook");
@@ -101,7 +101,7 @@ namespace SeleniumCsharp
             driver.FindElement(By.Id("btnModalEntrar")).Click();
             await Task.Delay(2000);
             driver.FindElement(By.Id("clickLogin")).Click();
-            await Task.Delay(3000);
+            await Task.Delay(10000);
 
             //Assert
             Assert.True(driver.FindElement(By.Id("labelSair")).Text.ToUpper().Equals("SAIR"));
@@ -128,14 +128,14 @@ namespace SeleniumCsharp
             li.Click();
 
             //Assert
-            Assert.False(driver.Url.Equals("http://localhost:8080/"));
-            Assert.True(driver.Url.Equals("http://localhost:8080/ListAllProducts/62830c2ad8e1850ac3348138?search=Morango"));
+            Assert.False(driver.Url.Equals("http://frutifeira-pipeline-front-end.s3-website-us-east-1.amazonaws.com/"));
+            Assert.True(driver.Url.Equals("http://frutifeira-pipeline-front-end.s3-website-us-east-1.amazonaws.com/ListAllProducts/62830c2ad8e1850ac3348138?search=Morango"));
         }
 
         [Test, Order(5)]
         public async Task addProductToCart()
         {
-            driver.Navigate().GoToUrl("http://localhost:8080/");
+            GoHome();
             await Task.Delay(2000);
 
             selectCondominiumModal();
@@ -163,7 +163,7 @@ namespace SeleniumCsharp
         [Test, Order(6)]
         public async Task goToMarketVendorStand()
         {
-            driver.Navigate().GoToUrl("http://localhost:8080/");
+            GoHome();
             await Task.Delay(2000);
 
             selectCondominiumModal();
@@ -177,8 +177,8 @@ namespace SeleniumCsharp
             await Task.Delay(2000);
 
             //Assert
-            Assert.False(driver.Url.Equals("http://localhost:8080/"));
-            Assert.True(driver.Url.Equals("http://localhost:8080/ListProduct/627af846b45b280fe8438f51"));
+            Assert.False(driver.Url.Equals("http://frutifeira-pipeline-front-end.s3-website-us-east-1.amazonaws.com/"));
+            Assert.True(driver.Url.Equals("http://frutifeira-pipeline-front-end.s3-website-us-east-1.amazonaws.com/ListProduct/627af846b45b280fe8438f51"));
         }
 
         [Test, Order(4)]
@@ -202,8 +202,8 @@ namespace SeleniumCsharp
             await Task.Delay(5000);
 
             //Assert
-            Assert.False(driver.Url.Equals("http://localhost:8080/"));
-            Assert.True(driver.Url.Equals("http://localhost:8080/ListAllProducts/62830c2ad8e1850ac3348138?type=all"));
+            Assert.False(driver.Url.Equals("http://frutifeira-pipeline-front-end.s3-website-us-east-1.amazonaws.com/"));
+            Assert.True(driver.Url.Equals("http://frutifeira-pipeline-front-end.s3-website-us-east-1.amazonaws.com/ListAllProducts/62830c2ad8e1850ac3348138?type=all"));
 
         }
 
@@ -213,7 +213,7 @@ namespace SeleniumCsharp
             driver.Quit();
         }
 
-        public void GoHome() => driver.Navigate().GoToUrl("http://localhost:8080/");
+        public void GoHome() => driver.Navigate().GoToUrl("http://frutifeira-pipeline-front-end.s3-website-us-east-1.amazonaws.com/");
 
 
     }

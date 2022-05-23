@@ -18,7 +18,7 @@ namespace SeleniumCsharp
         {
             string path = Directory.GetParent(Environment.CurrentDirectory).Parent.Parent.FullName;
             driver = new ChromeDriver(path + @"\drivers\");
-            driver.Navigate().GoToUrl("http://localhost:8080/LoginAdm");
+            driver.Navigate().GoToUrl("http://frutifeira-pipeline-front-end.s3-website-us-east-1.amazonaws.com/LoginAdm");
         }
 
         [Test]
@@ -29,7 +29,7 @@ namespace SeleniumCsharp
 
             //Act
             abaCondominio.Click();
-            await Task.Delay(2000);
+            await Task.Delay(5000);
 
             //Arrange 
             driver.FindElement(By.Id("loginEmail")).SendKeys("condominio4@gmail.com");
@@ -38,11 +38,17 @@ namespace SeleniumCsharp
 
             //Act
             btnLoginEntrar.Click();
-            await Task.Delay(2000);
+            await Task.Delay(3000);
 
             //Assert
-            Assert.False(driver.Url.Equals("http://localhost:8080/LoginAdm"));
-            Assert.True(driver.Url.Equals("http://localhost:8080/Condominium"));
+            Assert.False(driver.Url.Equals("http://frutifeira-pipeline-front-end.s3-website-us-east-1.amazonaws.com/LoginAdm"));
+            Assert.True(driver.Url.Equals("http://frutifeira-pipeline-front-end.s3-website-us-east-1.amazonaws.com/Condominium"));
+        }
+
+        [OneTimeTearDown]
+        public void TearDown()
+        {
+            driver.Quit();
         }
     }
 }
